@@ -13,7 +13,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { useLocation } from "react-router-dom";
 import styled from "@emotion/styled";
-import { Avatar, IconButton, useTheme } from "@mui/material";
+import { Avatar, IconButton, useTheme, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import TableViewIcon from "@mui/icons-material/TableView";
@@ -29,39 +29,39 @@ const DrawerArray = [
   {
     name: "Customers",
     icon: <PeopleIcon />,
-    link: "customers",
+    link: "/customers",
   },
   {
     name: "Invoices",
     icon: <ReceiptLongIcon />,
-    link: "invoices",
+    link: "/invoices",
   },
   {
-    name: "Chart",
-    icon: <BarChartIcon />,
-    link: "chart",
+    name: "Projects",
+    icon: <AccountTreeIcon />,
+    link: "/Projects",
   },
 ];
 const DrawerArray2 = [
   {
-    name: "Projects",
-    icon: <AccountTreeIcon />,
-    link: "Projects",
+    name: "Chart",
+    icon: <BarChartIcon />,
+    link: "/chart",
   },
   {
     name: "Form",
     icon: <TableViewIcon />,
-    link: "Form",
+    link: "/Form",
   },
   {
     name: "BarChart",
     icon: <PollIcon />,
-    link: "BarChart",
+    link: "/BarChart",
   },
   {
     name: "Geography Chart",
     icon: <TerrainIcon />,
-    link: "GeographyChart",
+    link: "/GeographyChart",
   },
 ];
 const openedMixin = (theme) => ({
@@ -71,6 +71,7 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
+  backgroundColor: theme.palette.BGColor.main,
 });
 
 const closedMixin = (theme) => ({
@@ -83,6 +84,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  backgroundColor: theme.palette.BGColor.main,
 });
 
 const Drawer = styled(MuiDrawer, {
@@ -129,6 +131,7 @@ function DrawerSide({ open, setOpen }) {
 
   return (
     <Drawer variant="permanent" open={open}>
+      {/* The Drawer Header contains the Photo logos */}
       <DrawerHeader>
         <Avatar
           alt="Admin Dashboard KGLogo"
@@ -148,22 +151,41 @@ function DrawerSide({ open, setOpen }) {
           </IconButton>
         ) : null}
       </DrawerHeader>
+      {/* The first divider between the Drawer Header and the Drawer itself */}
       {open ? <Divider /> : null}
+      {/* The first text between the 1st and 2nd divider between 2 maps */}
+      {open ? (
+        <Typography sx={{ mx: 2, mt: "10px" }} variant="body2" color="inherit">
+          Pages
+        </Typography>
+      ) : null}
       {/* The First map of the Drawer */}
+
       <List>
         {DrawerArray.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: "block" }}>
+          <ListItem
+            key={index}
+            sx={{
+              display: "block",
+              "& .css-im9jlm-MuiButtonBase-root-MuiListItemButton-root:hover, & .css-apuax0-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-5rw32f-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-1xs1lbg-MuiButtonBase-root-MuiListItemButton-root:hover":
+                {
+                  bgcolor:
+                    theme.palette.mode === "dark" ? "#ffb74d" : "#03a9f4",
+                },
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: open ? 2.5 : 2.2,
                 bgcolor:
                   location.pathname === item.link
                     ? theme.palette.mode === "dark"
-                      ? theme.palette.grey[900]
-                      : theme.palette.grey[300]
+                      ? theme.palette.warning.light
+                      : theme.palette.info.light
                     : null,
+                borderRadius: "15px",
               }}
               onClick={() => {
                 navigate(item.link);
@@ -172,26 +194,60 @@ function DrawerSide({ open, setOpen }) {
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 3 : 0.5,
                   justifyContent: "center",
+                  color:
+                    location.pathname === item.link
+                      ? theme.palette.mode === "dark"
+                        ? // @ts-ignore
+                          theme.palette.Drwertext.primary
+                        : // @ts-ignore
+                          theme.palette.Drwertext.primary
+                      : null,
                 }}
               >
                 {item.icon}
               </ListItemIcon>
               <ListItemText
                 primary={item.name}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color:
+                    location.pathname === item.link
+                      ? theme.palette.mode === "dark"
+                        ? // @ts-ignore
+                          theme.palette.Drwertext.primary
+                        : // @ts-ignore
+                          theme.palette.Drwertext.primary
+                      : null,
+                }}
               />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
-      <Divider />
+      {/* The secound text between the 1st and 2nd divider between 2 maps */}
+
+      {open ? (
+        <Typography sx={{ mx: 2, mt: 1 }} variant="body2" color="inherit">
+          Charts
+        </Typography>
+      ) : null}
       {/* The Secound map of the Drawer */}
 
       <List>
         {DrawerArray2.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: "block" }}>
+          <ListItem
+            key={index}
+            sx={{
+              display: "block",
+              "& .css-im9jlm-MuiButtonBase-root-MuiListItemButton-root:hover, & .css-apuax0-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-5rw32f-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-i4omt7-MuiButtonBase-root-MuiListItemButton-root:hover":
+                {
+                  bgcolor:
+                    theme.palette.mode === "dark" ? "#ffb74d" : "#03a9f4",
+                },
+            }}
+          >
             <ListItemButton
               sx={{
                 minHeight: 48,
@@ -200,9 +256,10 @@ function DrawerSide({ open, setOpen }) {
                 bgcolor:
                   location.pathname === item.link
                     ? theme.palette.mode === "dark"
-                      ? theme.palette.grey[900]
-                      : theme.palette.grey[300]
+                      ? theme.palette.warning.light
+                      : theme.palette.info.light
                     : null,
+                borderRadius: "15px",
               }}
               onClick={() => {
                 navigate(item.link);
@@ -211,15 +268,33 @@ function DrawerSide({ open, setOpen }) {
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : "auto",
+                  mr: open ? 3 : 0.3,
                   justifyContent: "center",
+                  color:
+                    location.pathname === item.link
+                      ? theme.palette.mode === "dark"
+                        ? // @ts-ignore
+                          theme.palette.Drwertext.primary
+                        : // @ts-ignore
+                          theme.palette.Drwertext.primary
+                      : null,
                 }}
               >
                 {item.icon}
               </ListItemIcon>
               <ListItemText
                 primary={item.name}
-                sx={{ opacity: open ? 1 : 0 }}
+                sx={{
+                  opacity: open ? 1 : 0,
+                  color:
+                    location.pathname === item.link
+                      ? theme.palette.mode === "dark"
+                        ? // @ts-ignore
+                          theme.palette.Drwertext.primary
+                        : // @ts-ignore
+                          theme.palette.Drwertext.primary
+                      : null,
+                }}
               />
             </ListItemButton>
           </ListItem>

@@ -1,34 +1,34 @@
-
-import { grey } from "@mui/material/colors";
-
 export const getDesignTokens = (mode) => ({
   palette: {
     mode,
     ...(mode === "light"
       ? {
           // palette values for light mode
-          text: {
-            primary: "#2B3445",
-          },
-          neutral: {
-            main: "#64748B",
+          BGColor: {
+            main: "#ffffff",
           },
 
-          favColor: {
-            main: grey[300],
+          text: {
+            primary: "#000000",
+          },
+
+
+          Drwertext: {
+            primary: "#ffffff",
           },
         }
       : {
           // palette values for dark mode
-          neutral: {
-            main: "#64748B",
+          BGColor: {
+            main: "#001a33",
           },
 
-          favColor: {
-            main: grey[800],
-          },
+
           text: {
-            primary: "#fff",
+            primary: "#ffd480",
+          },
+          Drwertext: {
+            primary: "#0d0d0d",
           },
         }),
   },

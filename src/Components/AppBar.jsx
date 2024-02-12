@@ -57,9 +57,9 @@ const AppBar = styled(MuiAppBar, {
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.black, 0.15),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.black, 0.25),
   },
   marginLeft: 0,
   width: "100%",
@@ -80,7 +80,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: theme.palette.mode === "dark" ? "white" : "black",
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -126,10 +126,12 @@ function AppBarr({ setMode }) {
         position="fixed"
         // @ts-ignore
         open={open}
+        // @ts-ignore
+        sx={{ backgroundColor: theme.palette.BGColor.main }}
       >
         <Toolbar>
           <IconButton
-            color="inherit"
+            color="default"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -150,7 +152,7 @@ function AppBarr({ setMode }) {
             }}
           >
             <Typography
-              sx={{ cursor: "pointer" }}
+              sx={{ color: theme.palette.text.primary, cursor: "pointer" }}
               onClick={() => {
                 navigate("/");
               }}
@@ -197,7 +199,7 @@ function AppBarr({ setMode }) {
                         prevMode === "light" ? "dark" : "light"
                       );
                     }}
-                    color="inherit"
+                    color="default"
                   >
                     <LightModeOutlined />
                   </IconButton>
@@ -212,7 +214,7 @@ function AppBarr({ setMode }) {
                         prevMode === "light" ? "dark" : "light"
                       );
                     }}
-                    color="inherit"
+                    color="default"
                   >
                     <DarkModeOutlined />
                   </IconButton>
@@ -263,7 +265,14 @@ function AppBarr({ setMode }) {
         </Toolbar>
       </AppBar>
       <Drawer open={open} setOpen={setOpen} />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          bgcolor: theme.palette.mode === "dark" ? " #20232A" : "whitesmoke",
+        }}
+      >
         <DrawerHeader />
         <Outlet />
       </Box>
