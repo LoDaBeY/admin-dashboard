@@ -3,7 +3,7 @@ import BreadCrumbs from "../Components/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { mockDataInvoices } from "../Data/Data";
-import { Add, Approval } from "@mui/icons-material";
+import { Approval } from "@mui/icons-material";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
@@ -126,14 +126,6 @@ function Invoices() {
           Title={"Invoices"}
           Subtitle={"HR System for managing list of invoices"}
         />
-        <Button
-          variant="contained"
-          color="success"
-          endIcon={<Add />}
-          sx={{ textTransform: "capitalize" }}
-        >
-          Add
-        </Button>
       </Stack>
       <Box
         sx={{

@@ -1149,3 +1149,54 @@ export const mockGeographyData = [
     value: 171135,
   },
 ];
+
+export const Translator = [
+  {
+    id: 1,
+    title: "Translation Services",
+    catagory: "Translation",
+    image: "https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/TXBCIBXOPII6ZH4QPHPR7MUCSY.jpg",
+    description:
+      "I offer expert translations in English, Arabic, and Turkish. Specializing in precision and cultural nuances, I cover various language pairs, ensuring your message's accuracy and cultural relevance.   ",
+  },
+  {
+    id: 2,
+    title: "Transcription Services",
+    catagory: "Transcription",
+    image: "https://www.legaltranscriptionservice.com/wp-content/uploads/2022/09/10-businesses-that-need-transcription-services-the-most.webp",
+    description:
+      "As a transcriptionist, I specialize in converting audio content into written form with precision and accuracy. With a keen ear and fast typing skills, I ensure that every word is captured. Trust me to transcribe your audio recordings into clear, well-structured text.",
+  },
+  {
+    id: 3,
+    title: "Subtitling Services",
+    catagory: "Subtitling",
+    image: "https://www.arabization-services.com/wp-content/uploads/2022/04/29.jpeg",
+    description:
+      "Maximize your videos' impact with my expert subtitling and transcription. With proficiency in Turkish, English, and Arabic, I bridge language barriers, providing captivating translations. Whether English to Arabic or Turkish, I'll make your videos resonate with global audiences, sharing compelling stories worldwide. Let's connect the world through powerful storytelling.   ",
+  },
+  {
+    id: 4,
+    title: "Machine Translation Post editing",
+    catagory: "MTPE",
+    image: "https://slator.com/assets/2019/05/neuralitpstudy.png",
+    description:
+      "Embark on a language transformation journey with my MTPE (Machine Translation Post-Editing) editing. I blend machine-generated translations with human creativity, creating linguistic masterpieces that resonate globally. Experience the synergy of technology and human expertise in crafting powerful communication. Let's shape the future together.   ",
+  },
+  {
+    id: 6,
+    title: "PM",
+    catagory: "Project Management",
+    image: "https://productimages.withfloats.com/serviceimages/tile/6387207ddd409bbc9069375eProject%20Management%20Image",
+    description:
+      "With extensive experience as a Project Manager and Operation Manager in Switzerland and the UAE, I provide outstanding Project Management services. My strategic approach, meticulous planning, and effective execution guarantee successful project outcomes that align with your business objectives.",
+  },
+  {
+    id: 7,
+    title: "LQA",
+    catagory: "Linguistic Quality Assurance",
+    image: "https://www.idexxcurrents.com/media/filer_public_thumbnails/filer_public/58/f0/58f0ba1e-f6aa-4378-8736-ac64d9b406df/quality-assurance-servic_1.jpg__800x500_q80_crop_subject_location-570%2C252_subsampling-2.jpg",
+    description:
+      "Embark on a journey to linguistic perfection with my exceptional Linguistic Quality Assurance services. I blend the artistry of language to create flawless content that resonates with your audience. From linguistic finesse to cultural relevance, I breathe life into your content, crafting a masterpiece of linguistic brilliance. Elevate your brand's voice and make a lasting impression with my unparalleled linguistic expertise.     ",
+  },
+];

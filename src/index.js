@@ -21,7 +21,8 @@ import Projects from "./Pages/Projects";
 import Form from "./Pages/Form";
 import BarChart from "./Pages/BarChart";
 import GeographyChart from "./Pages/GeographyChart";
-import  './index.css';
+import "./index.css";
+import OnePageProduct from "./Pages/OnePageProduct";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
       <Route path="Form" element={<Form />} />
       <Route path="BarChart" element={<BarChart />} />
       <Route path="GeographyChart" element={<GeographyChart />} />
+      <Route path="Projects/:userId" element={<OnePageProduct />} />
     </Route>
   )
 );

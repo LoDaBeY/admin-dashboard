@@ -1,11 +1,12 @@
 import { KeyboardArrowUp } from "@mui/icons-material";
-import { Box, Fab, Zoom, useScrollTrigger } from "@mui/material";
+import { Box, Fab, Zoom, useScrollTrigger, useTheme } from "@mui/material";
 import { useCallback } from "react";
 
 function ScrollUp() {
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+  const theme = useTheme();
 
   const trigger = useScrollTrigger();
   return (
@@ -22,7 +23,8 @@ function ScrollUp() {
       >
         <Fab
           onClick={scrollToTop}
-          color="success"
+          // @ts-ignore
+          color={theme.palette.mode === "dark"? "warning" : "info"}
           size="small"
           aria-label="Scroll back to top"
         >

@@ -1,4 +1,11 @@
-import { Box, Stack, Typography, useTheme, Button } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Typography,
+  useTheme,
+  Button,
+  TextField,
+} from "@mui/material";
 import BreadCrumbs from "../Components/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
 import { DataGrid } from "@mui/x-data-grid";
@@ -9,6 +16,9 @@ import {
   LockOpenOutlined,
   SecurityOutlined,
 } from "@mui/icons-material";
+import ModaltoAdd from "../Shared/ModaltoAdd";
+import ReactLoading from "react-loading";
+import { useState } from "react";
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -95,6 +105,53 @@ const columns = [
 
 function Customers() {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [Name, setName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [age, setage] = useState("");
+  const [phone, setphone] = useState("");
+  const [access, setaccess] = useState("");
+  const [ShowLoading, setShowLoading] = useState(false);
+
+  const InputName = (eo) => {
+    const inputValue = eo.target.value;
+    setName(inputValue);
+  };
+
+  const InputEmail = (eo) => {
+    const inputValue = eo.target.value;
+    setEmail(inputValue);
+  };
+
+  const Inputphone = (eo) => {
+    const inputValue = eo.target.value;
+    setphone(inputValue);
+    console.log(inputValue);
+  };
+
+  const Inputaccess = (eo) => {
+    const inputValue = eo.target.value;
+    setaccess(inputValue);
+  };
+
+  const Inputage = (eo) => {
+    const inputValue = eo.target.value;
+    setage(inputValue);
+  };
+
+  const SubmitTaskBtn = (eo) => {
+    eo.preventDefault();
+    setShowLoading(true);
+    handleClose();
+    setaccess("");
+    setphone("");
+    setEmail("");
+    setage("");
+    setName("");
+    setShowLoading(false);
+  };
 
   return (
     <div>
@@ -102,19 +159,24 @@ function Customers() {
         <title>Customers</title>
       </Helmet>
 
-      <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-      <BreadCrumbs
-        Title={"Customers"}
-        Subtitle={"Manage your Customers as you want"}
-      />
-      <Button
-        variant="contained"
-        color="success"
-        endIcon={<Add/>}
-        sx={{textTransform: "capitalize",  }}
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
       >
-        Add
-      </Button>
+        <BreadCrumbs
+          Title={"Customers"}
+          Subtitle={"Manage your Customers as you want"}
+        />
+        <Button
+          variant="contained"
+          color="success"
+          endIcon={<Add />}
+          sx={{ textTransform: "capitalize" }}
+          onClick={handleOpen}
+        >
+          Add
+        </Button>
       </Stack>
       <Box
         sx={{
@@ -157,6 +219,106 @@ function Customers() {
           disableRowSelectionOnClick
         />
       </Box>
+
+      {open && (
+        <ModaltoAdd handleClose={handleClose} open={open}>
+          <Typography
+            id="modal-modal-title"
+            textAlign={"center"}
+            variant="h6"
+            component="h2"
+          >
+            Add a new Customer for your Dashboard
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              height: "400px",
+              mt: 3,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+            component="form"
+          >
+            <TextField
+              onChange={(eo) => {
+                InputName(eo);
+              }}
+              placeholder="Name"
+              required
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              defaultValue={Name}
+            />
+            <TextField
+              onChange={(eo) => {
+                InputEmail(eo);
+              }}
+              placeholder="Email Address"
+              required
+              label="Email Address"
+              variant="outlined"
+              defaultValue={Email}
+            />
+
+            <TextField
+              onChange={(eo) => {
+                Inputage(eo);
+              }}
+              placeholder="age"
+              required
+              label="age"
+              variant="outlined"
+              defaultValue={age}
+            />
+
+            <TextField
+              onChange={(eo) => {
+                Inputphone(eo);
+              }}
+              placeholder="phone"
+              required
+              label="phone"
+              variant="outlined"
+              defaultValue={phone}
+            />
+
+            <TextField
+              onChange={(eo) => {
+                Inputaccess(eo);
+              }}
+              placeholder="access"
+              required
+              label="access"
+              variant="outlined"
+              defaultValue={access}
+            />
+
+            <Button
+              sx={{ position: "absolute", bottom: "30px", left: "40%" }}
+              onClick={(eo) => {
+                SubmitTaskBtn(eo);
+              }}
+              variant="contained"
+              color="success"
+              type="submit"
+            >
+              {ShowLoading ? (
+                <ReactLoading
+                  type={"spinningBubbles"}
+                  color={"Blue"}
+                  height={20}
+                  width={20}
+                />
+              ) : (
+                "Submit"
+              )}
+            </Button>
+          </Box>
+        </ModaltoAdd>
+      )}
     </div>
   );
 }
