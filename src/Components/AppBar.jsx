@@ -8,13 +8,18 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import {
+  DarkModeOutlined,
+  LightModeOutlined,
+  ShoppingBagRounded,
+} from "@mui/icons-material";
 import { alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Avatar, Menu, MenuItem, Tooltip, useMediaQuery } from "@mui/material";
 import Drawer from "./Drawer";
+import CartDrawer from "./CartDrawer";
 
 const drawerWidth = 240;
 
@@ -99,6 +104,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function AppBarr({ setMode }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [DrawerSide, setDrawerSide] = useState(false);
+  const DrawerSideOpenn = () => {
+    setDrawerSide(true);
+  };
+
+  const DrawerSideClose = () => {
+    setDrawerSide(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -122,6 +135,7 @@ function AppBarr({ setMode }) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       {/* The AppBar */}
+
       <AppBar
         position="fixed"
         // @ts-ignore
@@ -142,6 +156,7 @@ function AppBarr({ setMode }) {
           >
             <MenuIcon />
           </IconButton>
+
           {/* The logo of the  Header  */}
           <Box
             sx={{
@@ -186,6 +201,16 @@ function AppBarr({ setMode }) {
                 flexDirection: "row",
               }}
             >
+              {/* The Cart Button */}
+              <IconButton
+                color="default"
+                aria-label="open drawer"
+                edge="end"
+                onClick={DrawerSideOpenn}
+                sx={{ ...(DrawerSide && { display: "none" }) }}
+              >
+                <ShoppingBagRounded />
+              </IconButton>
               {/* The button for Dark And Light Mode. */}
               <div>
                 {theme.palette.mode === "light" ? (
@@ -263,8 +288,15 @@ function AppBarr({ setMode }) {
             </Box>
           </Box>
         </Toolbar>
+        {DrawerSide && (
+          <CartDrawer
+            DrawerSide={DrawerSide}
+            DrawerSideClose={DrawerSideClose}
+          />
+        )}
       </AppBar>
       <Drawer open={open} setOpen={setOpen} />
+
       <Box
         component="main"
         sx={{
@@ -274,6 +306,7 @@ function AppBarr({ setMode }) {
         }}
       >
         <DrawerHeader />
+
         <Outlet />
       </Box>
     </Box>

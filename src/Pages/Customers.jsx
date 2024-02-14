@@ -5,6 +5,9 @@ import {
   useTheme,
   Button,
   TextField,
+  MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BreadCrumbs from "../Components/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
@@ -19,6 +22,11 @@ import {
 import ModaltoAdd from "../Shared/ModaltoAdd";
 import ReactLoading from "react-loading";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+const regEmail =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -103,6 +111,23 @@ const columns = [
   },
 ];
 
+const SelectedAcess = [
+  {
+    value: "manager",
+    label: "manager",
+  },
+  {
+    value: "user",
+    label: "user",
+  },
+  {
+    value: "admin",
+    label: "admin",
+  },
+];
+
+const RegEmails = ``;
+
 function Customers() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -112,8 +137,38 @@ function Customers() {
   const [Email, setEmail] = useState("");
   const [age, setage] = useState("");
   const [phone, setphone] = useState("");
-  const [access, setaccess] = useState("");
   const [ShowLoading, setShowLoading] = useState(false);
+  const [SnackBar, setSnackBar] = useState(false);
+
+  const handleClick = () => {
+    setSnackBar(true);
+  };
+
+  const SnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackBar(false);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = () => {
+    console.log("done");
+    setShowLoading(true);
+    setphone("");
+    setEmail("");
+    setage("");
+    setName("");
+    setShowLoading(false);
+    handleClose();
+    handleClick();
+  };
 
   const InputName = (eo) => {
     const inputValue = eo.target.value;
@@ -128,29 +183,11 @@ function Customers() {
   const Inputphone = (eo) => {
     const inputValue = eo.target.value;
     setphone(inputValue);
-    console.log(inputValue);
-  };
-
-  const Inputaccess = (eo) => {
-    const inputValue = eo.target.value;
-    setaccess(inputValue);
   };
 
   const Inputage = (eo) => {
     const inputValue = eo.target.value;
     setage(inputValue);
-  };
-
-  const SubmitTaskBtn = (eo) => {
-    eo.preventDefault();
-    setShowLoading(true);
-    handleClose();
-    setaccess("");
-    setphone("");
-    setEmail("");
-    setage("");
-    setName("");
-    setShowLoading(false);
   };
 
   return (
@@ -240,27 +277,38 @@ function Customers() {
               gap: 2,
             }}
             component="form"
+            onSubmit={handleSubmit(onSubmit)}
           >
             <TextField
               onChange={(eo) => {
                 InputName(eo);
               }}
               placeholder="Name"
-              required
               id="outlined-basic"
               label="Name"
               variant="outlined"
               defaultValue={Name}
+              error={Boolean(errors.FulltName)}
+              {...register("FulltName", { required: true, minLength: 3 })}
+              helperText={
+                Boolean(errors.FulltName)
+                  ? "Are you kidding me? Write Full Name please :)"
+                  : null
+              }
             />
             <TextField
               onChange={(eo) => {
                 InputEmail(eo);
               }}
               placeholder="Email Address"
-              required
               label="Email Address"
               variant="outlined"
               defaultValue={Email}
+              error={Boolean(errors.email)}
+              {...register("email", { required: true, pattern: regEmail })}
+              helperText={
+                Boolean(errors.email) ? "Write Your actual email :)" : null
+              }
             />
 
             <TextField
@@ -268,10 +316,12 @@ function Customers() {
                 Inputage(eo);
               }}
               placeholder="age"
-              required
               label="age"
               variant="outlined"
               defaultValue={age}
+              error={Boolean(errors.age)}
+              {...register("age", { required: true, maxLength: 2 })}
+              helperText={Boolean(errors.age) ? "Are you this old :)" : null}
             />
 
             <TextField
@@ -279,28 +329,33 @@ function Customers() {
                 Inputphone(eo);
               }}
               placeholder="phone"
-              required
               label="phone"
               variant="outlined"
               defaultValue={phone}
+              error={Boolean(errors.phone)}
+              {...register("phone", { required: true, minLength: 2 })}
+              helperText={
+                Boolean(errors.phone)
+                  ? "Are you forginer to write phone number like this :)"
+                  : null
+              }
             />
 
             <TextField
-              onChange={(eo) => {
-                Inputaccess(eo);
-              }}
-              placeholder="access"
-              required
-              label="access"
-              variant="outlined"
-              defaultValue={access}
-            />
+              id="outlined-select-currency"
+              select
+              label="Select"
+              defaultValue="user"
+            >
+              {SelectedAcess.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
 
             <Button
               sx={{ position: "absolute", bottom: "30px", left: "40%" }}
-              onClick={(eo) => {
-                SubmitTaskBtn(eo);
-              }}
               variant="contained"
               color="success"
               type="submit"
@@ -319,6 +374,26 @@ function Customers() {
           </Box>
         </ModaltoAdd>
       )}
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={SnackBar}
+        autoHideDuration={3000}
+        onClose={SnackBarClose}
+      >
+        <Alert
+          onClose={SnackBarClose}
+          variant="filled"
+          sx={{
+            width: "100%",
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? theme.palette.warning.light
+                : theme.palette.info.light,
+          }}
+        >
+          Congratulations! A new Customer has been added!{" "}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

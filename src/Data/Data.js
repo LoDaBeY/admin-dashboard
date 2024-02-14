@@ -1,4 +1,3 @@
-
 export const mockDataTeam = [
   {
     id: 1,
@@ -208,9 +207,6 @@ export const mockDataInvoices = [
     date: "03/12/2022",
     access: "Approve",
     Decline: "Decline",
-
-    
-
   },
   {
     id: 2,
@@ -221,8 +217,6 @@ export const mockDataInvoices = [
     date: "06/15/2021",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 3,
@@ -233,8 +227,6 @@ export const mockDataInvoices = [
     date: "05/02/2022",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 4,
@@ -245,8 +237,6 @@ export const mockDataInvoices = [
     date: "03/21/2022",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 5,
@@ -257,8 +247,6 @@ export const mockDataInvoices = [
     date: "01/12/2021",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 6,
@@ -269,8 +257,6 @@ export const mockDataInvoices = [
     date: "11/02/2022",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 7,
@@ -281,8 +267,6 @@ export const mockDataInvoices = [
     date: "02/11/2022",
     access: "Approve",
     Decline: "Decline",
-
-
   },
   {
     id: 8,
@@ -293,8 +277,6 @@ export const mockDataInvoices = [
     date: "05/02/2021",
     access: "Approve",
     Decline: "Decline",
-
-
   },
 ];
 
@@ -461,7 +443,6 @@ export const mockPieData = [
     color: "hsl(344, 70%, 50%)",
   },
 ];
-
 
 export const mockGeographyData = [
   {
@@ -1155,7 +1136,12 @@ export const Translator = [
     id: 1,
     title: "Translation Services",
     catagory: "Translation",
-    image: "https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/TXBCIBXOPII6ZH4QPHPR7MUCSY.jpg",
+    extendsImages: [
+      "https://arc-anglerfish-washpost-prod-washpost.s3.amazonaws.com/public/TXBCIBXOPII6ZH4QPHPR7MUCSY.jpg",
+      "https://oncallinterpreters.com.au/wp-content/uploads/2021/09/shutterstock_1043590750.jpg",
+      "https://floridadocument.com/wp-content/uploads/2023/03/closeup-man-holding-planet-earth-surrounded-international-flags-black-back.jpg",
+      "https://etranslationservices.com/wp-content/uploads/2022/09/Choosing-a-Translation-Service-Provider.jpg",
+    ],
     description:
       "I offer expert translations in English, Arabic, and Turkish. Specializing in precision and cultural nuances, I cover various language pairs, ensuring your message's accuracy and cultural relevance.   ",
   },
@@ -1163,7 +1149,12 @@ export const Translator = [
     id: 2,
     title: "Transcription Services",
     catagory: "Transcription",
-    image: "https://www.legaltranscriptionservice.com/wp-content/uploads/2022/09/10-businesses-that-need-transcription-services-the-most.webp",
+    extendsImages: [
+      "https://www.legaltranscriptionservice.com/wp-content/uploads/2022/09/10-businesses-that-need-transcription-services-the-most.webp",
+      "https://speechex.io/wp-content/uploads/2023/05/Audio-transcription_Mesa-de-trabajo-1-copia.png",
+      "https://www.europeanbusinessreview.com/wp-content/uploads/2021/12/shutterstock_391199122.jpg",
+      "https://www.tech-synergy.com/assets/images/business-transcription-services.jpg",
+    ],
     description:
       "As a transcriptionist, I specialize in converting audio content into written form with precision and accuracy. With a keen ear and fast typing skills, I ensure that every word is captured. Trust me to transcribe your audio recordings into clear, well-structured text.",
   },
@@ -1171,7 +1162,12 @@ export const Translator = [
     id: 3,
     title: "Subtitling Services",
     catagory: "Subtitling",
-    image: "https://www.arabization-services.com/wp-content/uploads/2022/04/29.jpeg",
+    extendsImages: [
+      "https://www.arabization-services.com/wp-content/uploads/2022/04/29.jpeg",
+      "https://www.zoodigital.com/wp-content/uploads/2021/06/Services-%E2%80%93-ZOOsubs-Subtitling-v2.png",
+      "https://www.globalvoices.com/wp-content/uploads/2019/07/subtitling.jpg",
+      "https://gophrazy.com/media/tinymce/subtitling-services56.jpg",
+    ],
     description:
       "Maximize your videos' impact with my expert subtitling and transcription. With proficiency in Turkish, English, and Arabic, I bridge language barriers, providing captivating translations. Whether English to Arabic or Turkish, I'll make your videos resonate with global audiences, sharing compelling stories worldwide. Let's connect the world through powerful storytelling.   ",
   },
@@ -1179,7 +1175,12 @@ export const Translator = [
     id: 4,
     title: "Machine Translation Post editing",
     catagory: "MTPE",
-    image: "https://slator.com/assets/2019/05/neuralitpstudy.png",
+    extendsImages: [
+      "https://slator.com/assets/2019/05/neuralitpstudy.png",
+      "https://www.machinetranslation.com/_next/image?url=https%3A%2F%2Ftomedes.gumlet.io%2Fblog%2Fcover_image%2F1656662339MTPE-ARTICLE-Banner.jpg&w=828&q=75",
+      "https://www.itctraductionscanada.ca/wp-content/uploads/sites/2/2023/05/May-RS-2023-940x423.png",
+      "https://www.strakertranslations.com/_next/image?url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fdyk0rv2o%2Fproduction%2F19704f2ca724312c46f98067bc013be892085ed6-592x436.png%3Ffm%3Dwebp&w=3840&q=75",
+    ],
     description:
       "Embark on a language transformation journey with my MTPE (Machine Translation Post-Editing) editing. I blend machine-generated translations with human creativity, creating linguistic masterpieces that resonate globally. Experience the synergy of technology and human expertise in crafting powerful communication. Let's shape the future together.   ",
   },
@@ -1187,15 +1188,28 @@ export const Translator = [
     id: 6,
     title: "PM",
     catagory: "Project Management",
-    image: "https://productimages.withfloats.com/serviceimages/tile/6387207ddd409bbc9069375eProject%20Management%20Image",
+
+    extendsImages: [
+      "https://productimages.withfloats.com/serviceimages/tile/6387207ddd409bbc9069375eProject%20Management%20Image",
+      "https://dubaisuperseriesfinals.ae/wp-content/uploads/2021/01/benefits-of-a-project-management-company-services-to-your-business-dubaisuperseriesfinals.jpg",
+      "https://www.compendium.ae/wp-content/uploads/2020/03/projectmanagement1.svg",
+      "https://alliedglobal.com/wp-content/uploads/2023/08/benefits-ASO-image-orange.svg",
+      
+    ],
     description:
       "With extensive experience as a Project Manager and Operation Manager in Switzerland and the UAE, I provide outstanding Project Management services. My strategic approach, meticulous planning, and effective execution guarantee successful project outcomes that align with your business objectives.",
   },
   {
     id: 7,
     title: "LQA",
+    extendsImages: [
+      "https://wallpaperaccess.com/full/1948892.jpg",
+      "https://media.licdn.com/dms/image/D4D12AQEwAEy5LCj7qw/article-cover_image-shrink_600_2000/0/1684838495218?e=2147483647&v=beta&t=4p9OJWs8G-YkWg8IQCQ9RDjOhK_B-133bdtJYFok0Xg",
+      "https://media.licdn.com/dms/image/D4D12AQHXuR1dov41Jg/article-cover_image-shrink_720_1280/0/1683861934800?e=2147483647&v=beta&t=qe-BtByUV_91xto9CIBBsDDTMe8JRLWiu51eRSgh7WE",
+      "https://www.idexxcurrents.com/media/filer_public_thumbnails/filer_public/58/f0/58f0ba1e-f6aa-4378-8736-ac64d9b406df/quality-assurance-servic_1.jpg__800x500_q80_crop_subject_location-570%2C252_subsampling-2.jpg",
+
+    ],
     catagory: "Linguistic Quality Assurance",
-    image: "https://www.idexxcurrents.com/media/filer_public_thumbnails/filer_public/58/f0/58f0ba1e-f6aa-4378-8736-ac64d9b406df/quality-assurance-servic_1.jpg__800x500_q80_crop_subject_location-570%2C252_subsampling-2.jpg",
     description:
       "Embark on a journey to linguistic perfection with my exceptional Linguistic Quality Assurance services. I blend the artistry of language to create flawless content that resonates with your audience. From linguistic finesse to cultural relevance, I breathe life into your content, crafting a masterpiece of linguistic brilliance. Elevate your brand's voice and make a lasting impression with my unparalleled linguistic expertise.     ",
   },

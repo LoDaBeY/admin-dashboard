@@ -14,16 +14,19 @@ import {
 import BreadCrumbs from "../Components/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ShoppingCart } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
 import { Translator } from "../Data/Data";
-
+import DetailsThumb from "./DetailsThumb";
+import "./OnePageProduct.css";
 function OnePageProduct() {
   const [Quantity, setQuantity] = useState("");
   const [Revision, setRevision] = useState("");
   const theme = useTheme();
   let { userId } = useParams();
+  const [index, setindex] = useState(0);
+  const myRef = useRef(null);
 
   const handleQuantity = (event) => {
     setQuantity(event.target.value);
@@ -31,6 +34,16 @@ function OnePageProduct() {
 
   const handleRevision = (event) => {
     setRevision(event.target.value);
+  };
+
+  const handleTab = (index) => {
+    // @ts-ignore
+    setindex(index);
+    const images = myRef.current.children;
+    for (let i = 0; i < images.length; i++) {
+      images[i].className = images[i].className.replace("active", "");
+    }
+    images[index].className = "active";
   };
 
   const matchedObject = Translator.find((item) => item.title === userId);
@@ -66,15 +79,28 @@ function OnePageProduct() {
             }}
           >
             {matchedObject && (
-              <Box sx={{ m: 2, width: { sm: "550px", md: "1100px" } }}>
+              <Box
+                sx={{
+                  m: 2,
+                  width: { sm: "550px", md: "800px" },
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
                 <img
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "400px",
                     borderRadius: "15px",
                   }}
-                  src={matchedObject.image}
+                  src={matchedObject.extendsImages[index]}
                   alt=""
+                />
+
+                <DetailsThumb
+                  ImageLink={matchedObject.extendsImages}
+                  tab={handleTab}
+                  myRef={myRef}
                 />
               </Box>
             )}
@@ -107,7 +133,7 @@ function OnePageProduct() {
                     {matchedObject.title}
                   </Typography>
                 </Box>
-                <Box sx={{ textAlign: { sm: "center", md: "inherit" } }}>
+                <Box sx={{ textAlign: { xs: "center ", sm: "left " } }}>
                   <Typography
                     variant="body2"
                     sx={{
@@ -135,10 +161,11 @@ function OnePageProduct() {
                     width: "100%",
                     my: 3,
                     flexDirection: { sm: "column", md: "row" },
+                    alignItems: { xs: "center", sm: "space-around" },
                   }}
                   gap={4}
                 >
-                  <FormControl fullWidth>
+                  <FormControl sx={{ width: "230px" }}>
                     <InputLabel id="demo-simple-select-label">
                       Quantity
                     </InputLabel>
@@ -155,7 +182,7 @@ function OnePageProduct() {
                       <MenuItem value={3}>4</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl fullWidth>
+                  <FormControl sx={{ width: "230px" }}>
                     <InputLabel id="demo-simple-select-label">
                       Revision
                     </InputLabel>

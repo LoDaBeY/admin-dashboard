@@ -58,7 +58,7 @@ function Projects() {
                 <CardMedia
                   component="img"
                   height="300"
-                  image={item.image}
+                  image={item.extendsImages[0]}
                   alt={item.title}
                 />
                 <CardHeader

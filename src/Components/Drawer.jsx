@@ -130,7 +130,17 @@ function DrawerSide({ open, setOpen }) {
   const theme = useTheme();
 
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer
+      variant="permanent"
+      open={open}
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        "& .MuiDrawer-paper": {
+          width: drawerWidth,
+        },
+      }}
+    >
       {/* The Drawer Header contains the Photo logos */}
       <DrawerHeader>
         <Avatar
