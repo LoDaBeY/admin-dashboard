@@ -8,14 +8,15 @@ import {
   MenuItem,
   Snackbar,
   Alert,
+  IconButton,
 } from "@mui/material";
 import BreadCrumbs from "../Components/BreadCrumbs";
 import { Helmet } from "react-helmet-async";
 import { DataGrid } from "@mui/x-data-grid";
-import { mockDataTeam } from "../Data/Data";
 import {
   Add,
   AdminPanelSettings,
+  Close,
   LockOpenOutlined,
   SecurityOutlined,
 } from "@mui/icons-material";
@@ -23,6 +24,57 @@ import ModaltoAdd from "../Shared/ModaltoAdd";
 import ReactLoading from "react-loading";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+let DataTeam;
+const mockDataTeam = [
+  {
+    id: 1,
+    name: "Jon Snow",
+    email: "jonsnow@gmail.com",
+    age: 35,
+    phone: "(665)121-5454",
+    access: "admin",
+  },
+  {
+    id: 2,
+    name: "Cersei Lannister",
+    email: "cerseilannister@gmail.com",
+    age: 42,
+    phone: "(421)314-2288",
+    access: "manager",
+  },
+  {
+    id: 3,
+    name: "Jaime Lannister",
+    email: "jaimelannister@gmail.com",
+    age: 45,
+    phone: "(422)982-6739",
+    access: "user",
+  },
+  {
+    id: 4,
+    name: "Anya Stark",
+    email: "anyastark@gmail.com",
+    age: 16,
+    phone: "(921)425-6742",
+    access: "admin",
+  },
+  {
+    id: 5,
+    name: "Daenerys Targaryen",
+    email: "daenerystargaryen@gmail.com",
+    age: 31,
+    phone: "(421)445-1189",
+    access: "user",
+  },
+  {
+    id: 6,
+    name: "Ever Melisandre",
+    email: "evermelisandre@gmail.com",
+    age: 150,
+    phone: "(232)545-6483",
+    access: "manager",
+  },
+];
 
 const regEmail =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -126,23 +178,23 @@ const SelectedAcess = [
   },
 ];
 
-const RegEmails = ``;
-
 function Customers() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [Name, setName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [age, setage] = useState("");
-  const [phone, setphone] = useState("");
   const [ShowLoading, setShowLoading] = useState(false);
   const [SnackBar, setSnackBar] = useState(false);
-
+  const [DataTeamAgain, setDataTeamAgain] = useState(mockDataTeam);
   const handleClick = () => {
     setSnackBar(true);
   };
+
+  if (localStorage.CustomerData != null) {
+    DataTeam = JSON.parse(localStorage.CustomerData);
+  } else {
+    DataTeam = [];
+  }
 
   const SnackBarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -158,36 +210,24 @@ function Customers() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = () => {
-    console.log("done");
+  const onSubmit = (data) => {
+    const newCustomer = {
+      id: mockDataTeam.length + 1,
+      name: data.FulltName,
+      email: data.email,
+      age: parseInt(data.age),
+      phone: data.phone,
+      access: data.access,
+    };
+
+    DataTeam.push(newCustomer);
+    setDataTeamAgain([mockDataTeam, ...DataTeam]);
+
+    localStorage.setItem("CustomerData", JSON.stringify(DataTeamAgain));
     setShowLoading(true);
-    setphone("");
-    setEmail("");
-    setage("");
-    setName("");
-    setShowLoading(false);
     handleClose();
     handleClick();
-  };
-
-  const InputName = (eo) => {
-    const inputValue = eo.target.value;
-    setName(inputValue);
-  };
-
-  const InputEmail = (eo) => {
-    const inputValue = eo.target.value;
-    setEmail(inputValue);
-  };
-
-  const Inputphone = (eo) => {
-    const inputValue = eo.target.value;
-    setphone(inputValue);
-  };
-
-  const Inputage = (eo) => {
-    const inputValue = eo.target.value;
-    setage(inputValue);
+    setShowLoading(false);
   };
 
   return (
@@ -262,32 +302,37 @@ function Customers() {
           <Typography
             id="modal-modal-title"
             textAlign={"center"}
-            variant="h6"
-            component="h2"
+            variant="body1"
           >
             Add a new Customer for your Dashboard
           </Typography>
+
+          <IconButton
+            sx={{ position: "absolute", top: "8px", right: "8px" }}
+            aria-label="Close the Form"
+            onClick={handleClose}
+          >
+            <Close />
+          </IconButton>
+
           <Box
             sx={{
               width: "100%",
-              height: "400px",
+              height: "auto",
               mt: 3,
               display: "flex",
               flexDirection: "column",
               gap: 2,
+              position: "relative",
             }}
             component="form"
             onSubmit={handleSubmit(onSubmit)}
           >
             <TextField
-              onChange={(eo) => {
-                InputName(eo);
-              }}
               placeholder="Name"
               id="outlined-basic"
               label="Name"
               variant="outlined"
-              defaultValue={Name}
               error={Boolean(errors.FulltName)}
               {...register("FulltName", { required: true, minLength: 3 })}
               helperText={
@@ -297,13 +342,9 @@ function Customers() {
               }
             />
             <TextField
-              onChange={(eo) => {
-                InputEmail(eo);
-              }}
               placeholder="Email Address"
               label="Email Address"
               variant="outlined"
-              defaultValue={Email}
               error={Boolean(errors.email)}
               {...register("email", { required: true, pattern: regEmail })}
               helperText={
@@ -312,26 +353,18 @@ function Customers() {
             />
 
             <TextField
-              onChange={(eo) => {
-                Inputage(eo);
-              }}
               placeholder="age"
               label="age"
               variant="outlined"
-              defaultValue={age}
               error={Boolean(errors.age)}
               {...register("age", { required: true, maxLength: 2 })}
               helperText={Boolean(errors.age) ? "Are you this old :)" : null}
             />
 
             <TextField
-              onChange={(eo) => {
-                Inputphone(eo);
-              }}
               placeholder="phone"
               label="phone"
               variant="outlined"
-              defaultValue={phone}
               error={Boolean(errors.phone)}
               {...register("phone", { required: true, minLength: 2 })}
               helperText={
@@ -346,6 +379,7 @@ function Customers() {
               select
               label="Select"
               defaultValue="user"
+              {...register("access", { required: true })}
             >
               {SelectedAcess.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -354,23 +388,27 @@ function Customers() {
               ))}
             </TextField>
 
-            <Button
-              sx={{ position: "absolute", bottom: "30px", left: "40%" }}
-              variant="contained"
-              color="success"
-              type="submit"
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
             >
-              {ShowLoading ? (
-                <ReactLoading
-                  type={"spinningBubbles"}
-                  color={"Blue"}
-                  height={20}
-                  width={20}
-                />
-              ) : (
-                "Submit"
-              )}
-            </Button>
+              <Button
+                sx={{ width: "95px", alignContent: "center" }}
+                variant="contained"
+                color="success"
+                type="submit"
+              >
+                {ShowLoading ? (
+                  <ReactLoading
+                    type={"spinningBubbles"}
+                    color={"Blue"}
+                    height={20}
+                    width={20}
+                  />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            </Box>
           </Box>
         </ModaltoAdd>
       )}

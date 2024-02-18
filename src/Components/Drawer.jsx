@@ -19,7 +19,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import TableViewIcon from "@mui/icons-material/TableView";
 import PollIcon from "@mui/icons-material/Poll";
 import TerrainIcon from "@mui/icons-material/Terrain";
-
+import PieChartIcon from '@mui/icons-material/PieChart';
 const DrawerArray = [
   {
     name: "Dashboard",
@@ -44,14 +44,19 @@ const DrawerArray = [
 ];
 const DrawerArray2 = [
   {
-    name: "Chart",
+    name: "Calender",
     icon: <BarChartIcon />,
-    link: "/chart",
+    link: "/Calender",
   },
   {
-    name: "Form",
+    name: "LineBar",
     icon: <TableViewIcon />,
-    link: "/Form",
+    link: "/LineBar",
+  },
+  {
+    name: "Pie",
+    icon: <PieChartIcon />,
+    link: "/Pie",
   },
   {
     name: "BarChart",

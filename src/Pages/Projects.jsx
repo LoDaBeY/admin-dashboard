@@ -47,7 +47,7 @@ function Projects() {
                 m: 2,
                 minHeight: 500,
               }}
-              key={item.image}
+              key={item.title}
             >
               <CardActionArea
                 sx={{            }}

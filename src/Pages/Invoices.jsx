@@ -170,6 +170,7 @@ function Invoices() {
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
+      
     </Box>
   );
 }

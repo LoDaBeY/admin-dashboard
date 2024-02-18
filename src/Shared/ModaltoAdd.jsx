@@ -2,10 +2,10 @@ import { Box, Modal } from "@mui/material";
 
 const style = {
   position: "absolute",
-  top: "40%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 425,
   bgcolor: "background.paper",
   border: "none",
   borderRadius: "10px",
