@@ -139,7 +139,7 @@ function Geography({GeographyBar= false}) {
                 direction: 'column',
                 justify: true,
                 translateX: 20,
-                translateY: -100,
+                translateY: GeographyBar ? -10 : -100,
                 itemsSpacing: 0,
                 itemWidth: 94,
                 itemHeight: 18,
@@ -151,7 +151,7 @@ function Geography({GeographyBar= false}) {
                     {
                         on: 'hover',
                         style: {
-                            itemTextColor: '#000000',
+                            itemTextColor: theme.palette.mode === "dark"? "white" : " black",
                             itemOpacity: 1
                         }
                     }

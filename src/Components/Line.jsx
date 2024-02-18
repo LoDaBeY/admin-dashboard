@@ -134,7 +134,7 @@ function Line( {LineHeigh = false}) {
             tickPadding: 5,
             tickRotation: 0,
             legend: 'transportation',
-            legendOffset: 45,
+            legendOffset: 40,
             legendPosition: 'middle'
         }}
         axisLeft={{
@@ -142,7 +142,7 @@ function Line( {LineHeigh = false}) {
             tickPadding: 5,
             tickRotation: 0,
             legend: 'count',
-            legendOffset: -50,
+            legendOffset: -45,
             legendPosition: 'middle'
         }}
         pointSize={10}
