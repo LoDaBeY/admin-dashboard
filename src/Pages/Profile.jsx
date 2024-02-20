@@ -7,6 +7,17 @@ import { Helmet } from "react-helmet-async";
 import { SocialIcon } from "react-social-icons";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Lottie from "react-lottie";
+import animationDataDark from "../Assests/LoadingDark.json";
+
+const defaultOptionsForDark = {
+  loop: true,
+  autoplay: true,
+  animationData: animationDataDark,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 function Profile() {
   const [user, loading] = useAuthState(auth);
@@ -18,6 +29,14 @@ function Profile() {
       navigate("/Login");
     }
   });
+
+  if (loading ) {
+    return (
+      <Box>
+        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+      </Box>
+    );
+  }
   
 if (user) {
   return (

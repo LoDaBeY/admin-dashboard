@@ -6,6 +6,17 @@ import Line from "../Components/Line";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../FirebaseConfig/firebaseConfige";
 import { useNavigate } from "react-router-dom";
+import Lottie from "react-lottie";
+import animationDataDark from "../Assests/LoadingDark.json";
+
+const defaultOptionsForDark = {
+  loop: true,
+  autoplay: true,
+  animationData: animationDataDark,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 function LineBar() {
   const [user, loading] = useAuthState(auth);
@@ -17,6 +28,14 @@ function LineBar() {
       navigate("/Login");
     }
   });
+
+  if (loading ) {
+    return (
+      <Box>
+        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+      </Box>
+    );
+  }
 
   if (user) {
     return (

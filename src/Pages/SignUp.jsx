@@ -18,11 +18,25 @@ import MailIcon from "@mui/icons-material/Mail";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../FirebaseConfig/firebaseConfige";
 import {  signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Lottie from "react-lottie";
+import animationDataDark from "../Assests/LoadingDark.json";
+
+const defaultOptionsForDark = {
+  loop: true,
+  autoplay: true,
+  animationData: animationDataDark,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
+
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [FullName, setFullName] = useState("");
+  const [user, loading] = useAuthState(auth);
 
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
@@ -75,6 +89,15 @@ function SignUp() {
     setFullName(inputFullNameValue);
   };
 
+  if (loading ) {
+    return (
+      <Box>
+        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+      </Box>
+    );
+  }
+
+if (!user) {
   return (
     <div>
       <Helmet>
@@ -276,6 +299,7 @@ function SignUp() {
       </Box>
     </div>
   );
+}
 }
 
 export default SignUp;
