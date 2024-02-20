@@ -5,6 +5,10 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { mockDataInvoices } from "../Data/Data";
 import { Approval } from "@mui/icons-material";
 import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../FirebaseConfig/firebaseConfige";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
   {
@@ -110,8 +114,18 @@ const columns = [
 ];
 
 function Invoices() {
+  const [user, loading] = useAuthState(auth);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate("/Login");
+    }
+  });
   const theme = useTheme();
 
+if (user) {
   return (
     <Box>
       <Helmet>
@@ -173,6 +187,7 @@ function Invoices() {
       
     </Box>
   );
+}
 }
 
 export default Invoices;

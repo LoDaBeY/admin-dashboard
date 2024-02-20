@@ -20,6 +20,8 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Avatar, Menu, MenuItem, Tooltip, useMediaQuery } from "@mui/material";
 import Drawer from "./Drawer";
 import CartDrawer from "./CartDrawer";
+import { signOut } from "firebase/auth";
+import { auth } from "../FirebaseConfig/firebaseConfige";
 
 const drawerWidth = 240;
 
@@ -27,8 +29,9 @@ const settings = [
   {
     Name: "Profile",
     link: "Profile",
+    VisitProfile: true,
   },
-  { Name: "Logout", link: "Login" },
+  { Name: "Logout", link: "Login", LogOut: true },
 ];
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -130,6 +133,27 @@ function AppBarr({ setMode }) {
   const navigate = useNavigate();
 
   const IsScreenLarge = useMediaQuery("(min-width:500px)");
+
+  const SignOutBtn = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
+  const AvatarSettingsAction = (item) => {
+    if (item.VisitProfile === true) {
+      setAnchorElUser(null);
+      navigate(item.link);
+    } else if (item.LogOut) {
+      SignOutBtn();
+      setAnchorElUser(null);
+      navigate(item.link);
+    }
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -276,8 +300,7 @@ function AppBarr({ setMode }) {
                     <MenuItem
                       key={item.link}
                       onClick={() => {
-                        setAnchorElUser(null);
-                        navigate(item.link);
+                        AvatarSettingsAction(item);
                       }}
                     >
                       <Typography textAlign="center">{item.Name}</Typography>

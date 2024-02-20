@@ -19,7 +19,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import TableViewIcon from "@mui/icons-material/TableView";
 import PollIcon from "@mui/icons-material/Poll";
 import TerrainIcon from "@mui/icons-material/Terrain";
-import PieChartIcon from '@mui/icons-material/PieChart';
+import PieChartIcon from "@mui/icons-material/PieChart";
 const DrawerArray = [
   {
     name: "Dashboard",
@@ -151,7 +151,7 @@ function DrawerSide({ open, setOpen }) {
         <Avatar
           alt="Admin Dashboard KGLogo"
           src="/KGLogo.png"
-          sx={{ width: 55, height: 55, mr: 6, my: 1, cursor: "pointer" }}
+          sx={{ width: 55, height: 55, mr: 6, my: 2, cursor: "pointer" }}
           onClick={() => {
             navigate("/");
           }}
@@ -170,7 +170,7 @@ function DrawerSide({ open, setOpen }) {
       {open ? <Divider /> : null}
       {/* The first text between the 1st and 2nd divider between 2 maps */}
       {open ? (
-        <Typography sx={{ mx: 2, mt: "10px" }} variant="body2" color="inherit">
+        <Typography sx={{ mx: 2, mt: "15px" }} variant="body2" color="inherit">
           Pages
         </Typography>
       ) : null}
@@ -181,19 +181,21 @@ function DrawerSide({ open, setOpen }) {
           <ListItem
             key={index}
             sx={{
-              display: "block",
-              "& .css-im9jlm-MuiButtonBase-root-MuiListItemButton-root:hover, & .css-apuax0-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-5rw32f-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-1xs1lbg-MuiButtonBase-root-MuiListItemButton-root:hover":
-                {
-                  bgcolor:
-                    theme.palette.mode === "dark" ? "#ffb74d" : "#03a9f4",
-                },
+              "& .MuiButtonBase-root:hover": {
+                bgcolor:
+                  location.pathname === item.link
+                    ? theme.palette.mode === "dark"
+                      ? "#ffb74d"
+                      : "#03a9f4"
+                    : null,
+              },
             }}
           >
             <ListItemButton
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: open ? 2.5 : 2.2,
+                px: 2.5,
                 bgcolor:
                   location.pathname === item.link
                     ? theme.palette.mode === "dark"
@@ -204,6 +206,7 @@ function DrawerSide({ open, setOpen }) {
               }}
               onClick={() => {
                 navigate(item.link);
+                handleDrawerClose()
               }}
             >
               <ListItemIcon
@@ -242,25 +245,29 @@ function DrawerSide({ open, setOpen }) {
         ))}
       </List>
       {/* The secound text between the 1st and 2nd divider between 2 maps */}
-
+      <Divider/>
       {open ? (
-        <Typography sx={{ mx: 2, mt: 1 }} variant="body2" color="inherit">
+        <Typography sx={{ mx: 2, mt: "15px" }} variant="body2" color="inherit">
           Charts
         </Typography>
       ) : null}
       {/* The Secound map of the Drawer */}
 
       <List>
+
+
         {DrawerArray2.map((item, index) => (
           <ListItem
             key={index}
             sx={{
-              display: "block",
-              "& .css-im9jlm-MuiButtonBase-root-MuiListItemButton-root:hover, & .css-apuax0-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-5rw32f-MuiButtonBase-root-MuiListItemButton-root:hover , & .css-i4omt7-MuiButtonBase-root-MuiListItemButton-root:hover":
-                {
-                  bgcolor:
-                    theme.palette.mode === "dark" ? "#ffb74d" : "#03a9f4",
-                },
+              "& .MuiButtonBase-root:hover": {
+                bgcolor:
+                  location.pathname === item.link
+                    ? theme.palette.mode === "dark"
+                      ? "#ffb74d"
+                      : "#03a9f4"
+                    : null,
+              },
             }}
           >
             <ListItemButton
@@ -278,6 +285,7 @@ function DrawerSide({ open, setOpen }) {
               }}
               onClick={() => {
                 navigate(item.link);
+                handleDrawerClose()
               }}
             >
               <ListItemIcon

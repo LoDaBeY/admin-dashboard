@@ -34,7 +34,7 @@ function DashboardPapers({
         }}
         elevation={3}
       >
-        <Stack gap={1} alignItems={"center"} direction={"column"}>
+        <Stack gap={2} sx={{ml: 2}} alignItems={"center"} direction={"column"}>
           <IconButton aria-label="">{Icon}</IconButton>
           <Typography variant="body2" color="inherit">
             {Numberoftest}

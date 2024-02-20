@@ -23,7 +23,8 @@ import "./index.css";
 import OnePageProduct from "./Pages/OnePageProduct";
 import Calender from "./Pages/Calender";
 import LineBar from "./Pages/LineBar";
-import PieChart from "Pages/PieChart";
+import PieChart from "./Pages/PieChart";
+import Profile from "./Pages/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
       <Route path="BarChart" element={<BarChart />} />
       <Route path="Pie" element={<PieChart />} />
       <Route path="GeographyChart" element={<GeographyChart />} />
+      <Route path="Profile" element={<Profile />} />
       <Route path="Projects/:userId" element={<OnePageProduct />} />
     </Route>
   )

@@ -22,8 +22,11 @@ import {
 } from "@mui/icons-material";
 import ModaltoAdd from "../Shared/ModaltoAdd";
 import ReactLoading from "react-loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../FirebaseConfig/firebaseConfige";
+import { useNavigate } from "react-router-dom";
 let DataTeam;
 const mockDataTeam = [
   {
@@ -179,6 +182,16 @@ const SelectedAcess = [
 ];
 
 function Customers() {
+  const [user, loading] = useAuthState(auth);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate("/Login");
+    }
+  });
+
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -210,6 +223,10 @@ function Customers() {
     formState: { errors },
   } = useForm();
 
+  // useEffect(() => {
+  //   localStorage.setItem('mockDataTeam', JSON.stringify(mockDataTeam));
+  // }, [DataTeam]);
+
   const onSubmit = (data) => {
     const newCustomer = {
       id: mockDataTeam.length + 1,
@@ -221,8 +238,7 @@ function Customers() {
     };
 
     DataTeam.push(newCustomer);
-    setDataTeamAgain([mockDataTeam, ...DataTeam]);
-
+    setDataTeamAgain([...mockDataTeam, ...DataTeam]);
     localStorage.setItem("CustomerData", JSON.stringify(DataTeamAgain));
     setShowLoading(true);
     handleClose();
@@ -230,210 +246,216 @@ function Customers() {
     setShowLoading(false);
   };
 
-  return (
-    <div>
-      <Helmet>
-        <title>Customers</title>
-      </Helmet>
+  if (user) {
+    return (
+      <div>
+        <Helmet>
+          <title>Customers</title>
+        </Helmet>
 
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
-        <BreadCrumbs
-          Title={"Customers"}
-          Subtitle={"Manage your Customers as you want"}
-        />
-        <Button
-          variant="contained"
-          color="success"
-          endIcon={<Add />}
-          sx={{ textTransform: "capitalize" }}
-          onClick={handleOpen}
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
-          Add
-        </Button>
-      </Stack>
-      <Box
-        sx={{
-          height: "75vh",
-          width: "100%",
-          "& .MuiDataGrid-columnHeaders": {
-            bgcolor:
-              // @ts-ignore
-              theme.palette.BGColor.main,
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            // @ts-ignore
-            bgcolor: theme.palette.BGColor.main,
-          },
-          "& .NameColumn": {
-            color: theme.palette.primary.main,
-          },
-          "& .EmailColumn": {
-            color: theme.palette.error.main,
-          },
-          "& .PhoneColumn": {
-            color: theme.palette.success.main,
-          },
-          mt: 2,
-        }}
-      >
-        <DataGrid
-          rows={mockDataTeam}
-          // @ts-ignore
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 15,
-              },
+          <BreadCrumbs
+            Title={"Customers"}
+            Subtitle={"Manage your Customers as you want"}
+          />
+          <Button
+            variant="contained"
+            color="success"
+            endIcon={<Add />}
+            sx={{ textTransform: "capitalize" }}
+            onClick={handleOpen}
+          >
+            Add
+          </Button>
+        </Stack>
+        <Box
+          sx={{
+            height: "75vh",
+            width: "100%",
+            "& .MuiDataGrid-columnHeaders": {
+              bgcolor:
+                // @ts-ignore
+                theme.palette.BGColor.main,
+              borderBottom: "none",
             },
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              // @ts-ignore
+              bgcolor: theme.palette.BGColor.main,
+            },
+            "& .NameColumn": {
+              color: theme.palette.primary.main,
+            },
+            "& .EmailColumn": {
+              color: theme.palette.error.main,
+            },
+            "& .PhoneColumn": {
+              color: theme.palette.success.main,
+            },
+            mt: 2,
           }}
-          disableRowSelectionOnClick
-        />
-      </Box>
-
-      {open && (
-        <ModaltoAdd handleClose={handleClose} open={open}>
-          <Typography
-            id="modal-modal-title"
-            textAlign={"center"}
-            variant="body1"
-          >
-            Add a new Customer for your Dashboard
-          </Typography>
-
-          <IconButton
-            sx={{ position: "absolute", top: "8px", right: "8px" }}
-            aria-label="Close the Form"
-            onClick={handleClose}
-          >
-            <Close />
-          </IconButton>
-
-          <Box
-            sx={{
-              width: "100%",
-              height: "auto",
-              mt: 3,
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              position: "relative",
+        >
+          <DataGrid
+            rows={mockDataTeam}
+            // @ts-ignore
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 15,
+                },
+              },
             }}
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <TextField
-              placeholder="Name"
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              error={Boolean(errors.FulltName)}
-              {...register("FulltName", { required: true, minLength: 3 })}
-              helperText={
-                Boolean(errors.FulltName)
-                  ? "Are you kidding me? Write Full Name please :)"
-                  : null
-              }
-            />
-            <TextField
-              placeholder="Email Address"
-              label="Email Address"
-              variant="outlined"
-              error={Boolean(errors.email)}
-              {...register("email", { required: true, pattern: regEmail })}
-              helperText={
-                Boolean(errors.email) ? "Write Your actual email :)" : null
-              }
-            />
+            disableRowSelectionOnClick
+          />
+        </Box>
 
-            <TextField
-              placeholder="age"
-              label="age"
-              variant="outlined"
-              error={Boolean(errors.age)}
-              {...register("age", { required: true, maxLength: 2 })}
-              helperText={Boolean(errors.age) ? "Are you this old :)" : null}
-            />
-
-            <TextField
-              placeholder="phone"
-              label="phone"
-              variant="outlined"
-              error={Boolean(errors.phone)}
-              {...register("phone", { required: true, minLength: 2 })}
-              helperText={
-                Boolean(errors.phone)
-                  ? "Are you forginer to write phone number like this :)"
-                  : null
-              }
-            />
-
-            <TextField
-              id="outlined-select-currency"
-              select
-              label="Select"
-              defaultValue="user"
-              {...register("access", { required: true })}
+        {open && (
+          <ModaltoAdd handleClose={handleClose} open={open}>
+            <Typography
+              id="modal-modal-title"
+              textAlign={"center"}
+              variant="body1"
             >
-              {SelectedAcess.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
+              Add a new Customer for your Dashboard
+            </Typography>
+
+            <IconButton
+              sx={{ position: "absolute", top: "8px", right: "8px" }}
+              aria-label="Close the Form"
+              onClick={handleClose}
+            >
+              <Close />
+            </IconButton>
 
             <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+              sx={{
+                width: "100%",
+                height: "auto",
+                mt: 3,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                position: "relative",
+              }}
+              component="form"
+              onSubmit={handleSubmit(onSubmit)}
             >
-              <Button
-                sx={{ width: "95px", alignContent: "center" }}
-                variant="contained"
-                color="success"
-                type="submit"
+              <TextField
+                placeholder="Name"
+                id="outlined-basic"
+                label="Name"
+                variant="outlined"
+                error={Boolean(errors.FulltName)}
+                {...register("FulltName", { required: true, minLength: 3 })}
+                helperText={
+                  Boolean(errors.FulltName)
+                    ? "Are you kidding me? Write Full Name please :)"
+                    : null
+                }
+              />
+              <TextField
+                placeholder="Email Address"
+                label="Email Address"
+                variant="outlined"
+                error={Boolean(errors.email)}
+                {...register("email", { required: true, pattern: regEmail })}
+                helperText={
+                  Boolean(errors.email) ? "Write Your actual email :)" : null
+                }
+              />
+
+              <TextField
+                placeholder="age"
+                label="age"
+                variant="outlined"
+                error={Boolean(errors.age)}
+                {...register("age", { required: true, maxLength: 2 })}
+                helperText={Boolean(errors.age) ? "Are you this old :)" : null}
+              />
+
+              <TextField
+                placeholder="phone"
+                label="phone"
+                variant="outlined"
+                error={Boolean(errors.phone)}
+                {...register("phone", { required: true, minLength: 2 })}
+                helperText={
+                  Boolean(errors.phone)
+                    ? "Are you forginer to write phone number like this :)"
+                    : null
+                }
+              />
+
+              <TextField
+                id="outlined-select-currency"
+                select
+                label="Select"
+                defaultValue="user"
+                {...register("access", { required: true })}
               >
-                {ShowLoading ? (
-                  <ReactLoading
-                    type={"spinningBubbles"}
-                    color={"Blue"}
-                    height={20}
-                    width={20}
-                  />
-                ) : (
-                  "Submit"
-                )}
-              </Button>
+                {SelectedAcess.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  sx={{ width: "95px", alignContent: "center" }}
+                  variant="contained"
+                  color="success"
+                  type="submit"
+                >
+                  {ShowLoading ? (
+                    <ReactLoading
+                      type={"spinningBubbles"}
+                      color={"Blue"}
+                      height={20}
+                      width={20}
+                    />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </ModaltoAdd>
-      )}
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={SnackBar}
-        autoHideDuration={3000}
-        onClose={SnackBarClose}
-      >
-        <Alert
+          </ModaltoAdd>
+        )}
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={SnackBar}
+          autoHideDuration={3000}
           onClose={SnackBarClose}
-          variant="filled"
-          sx={{
-            width: "100%",
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? theme.palette.warning.light
-                : theme.palette.info.light,
-          }}
         >
-          Congratulations! A new Customer has been added!{" "}
-        </Alert>
-      </Snackbar>
-    </div>
-  );
+          <Alert
+            onClose={SnackBarClose}
+            variant="filled"
+            sx={{
+              width: "100%",
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.warning.light
+                  : theme.palette.info.light,
+            }}
+          >
+            Congratulations! A new Customer has been added!{" "}
+          </Alert>
+        </Snackbar>
+      </div>
+    );
+  }
 }
 
 export default Customers;
