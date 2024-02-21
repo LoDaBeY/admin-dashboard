@@ -195,7 +195,7 @@ function DrawerSide({ open, setOpen }) {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2,
                 bgcolor:
                   location.pathname === item.link
                     ? theme.palette.mode === "dark"
@@ -206,7 +206,7 @@ function DrawerSide({ open, setOpen }) {
               }}
               onClick={() => {
                 navigate(item.link);
-                handleDrawerClose()
+                handleDrawerClose();
               }}
             >
               <ListItemIcon
@@ -245,7 +245,7 @@ function DrawerSide({ open, setOpen }) {
         ))}
       </List>
       {/* The secound text between the 1st and 2nd divider between 2 maps */}
-      <Divider/>
+      <Divider />
       {open ? (
         <Typography sx={{ mx: 2, mt: "15px" }} variant="body2" color="inherit">
           Charts
@@ -254,8 +254,6 @@ function DrawerSide({ open, setOpen }) {
       {/* The Secound map of the Drawer */}
 
       <List>
-
-
         {DrawerArray2.map((item, index) => (
           <ListItem
             key={index}
@@ -274,7 +272,7 @@ function DrawerSide({ open, setOpen }) {
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                px: 2,
                 bgcolor:
                   location.pathname === item.link
                     ? theme.palette.mode === "dark"
@@ -285,7 +283,7 @@ function DrawerSide({ open, setOpen }) {
               }}
               onClick={() => {
                 navigate(item.link);
-                handleDrawerClose()
+                handleDrawerClose();
               }}
             >
               <ListItemIcon

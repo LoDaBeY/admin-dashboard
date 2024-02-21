@@ -55,6 +55,8 @@ function createEventId() {
 
 function Calender() {
   const [user, loading] = useAuthState(auth);
+  const [currentEvents, setcurrentEvents] = useState([]);
+  const [LocalStorage, setLocalStorage] = useState([]);
 
   const navigate = useNavigate();
 
@@ -64,9 +66,25 @@ function Calender() {
     }
   });
 
-  
+  useEffect(() => {
+    if (localStorage.NewEvent !== null) {
+      setLocalStorage(JSON.parse(localStorage.getItem("NewEvent")));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (LocalStorage && LocalStorage.length > 0) {
+      setcurrentEvents(LocalStorage);
+    }
+  }, [LocalStorage]);
+
+  useEffect(() => {
+    if (currentEvents.length > 0) {
+      localStorage.setItem("NewEvent", JSON.stringify(currentEvents));
+    }
+  }, [currentEvents]);
+
   const theme = useTheme();
-  const [currentEvents, setcurrentEvents] = useState([]);
 
   const handleEvents = (events) => {
     setcurrentEvents(events);
@@ -92,13 +110,18 @@ function Calender() {
       `Are you sure you want to delete the event '${clickInfo.event.title}'`
     ) {
       clickInfo.event.remove();
+      localStorage.removeItem("NewEvent");
     }
   };
 
-  if (loading ) {
+  if (loading) {
     return (
       <Box>
-        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+        <Lottie
+          options={defaultOptionsForDark}
+          height={"100%"}
+          width={"100%"}
+        />
       </Box>
     );
   }
@@ -135,7 +158,7 @@ function Calender() {
               <ul>{currentEvents.map(renderSidebarEvent)}</ul>
             </div>
           </Paper>
-  
+
           <div className="demo-app-main">
             <FullCalendar
               plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -165,8 +188,6 @@ function Calender() {
       </div>
     );
   }
-
-
 }
 
 export default Calender;

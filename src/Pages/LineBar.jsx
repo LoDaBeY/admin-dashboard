@@ -32,7 +32,7 @@ function LineBar() {
   if (loading ) {
     return (
       <Box>
-        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+        <Lottie options={defaultOptionsForDark} height={"100%"} width={"100%"} />
       </Box>
     );
   }

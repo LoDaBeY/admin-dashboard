@@ -39,58 +39,6 @@ const defaultOptionsForDark = {
   },
 };
 
-let DataTeam;
-const mockDataTeam = [
-  {
-    id: 1,
-    name: "Jon Snow",
-    email: "jonsnow@gmail.com",
-    age: 35,
-    phone: "(665)121-5454",
-    access: "admin",
-  },
-  {
-    id: 2,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 3,
-    name: "Jaime Lannister",
-    email: "jaimelannister@gmail.com",
-    age: 45,
-    phone: "(422)982-6739",
-    access: "user",
-  },
-  {
-    id: 4,
-    name: "Anya Stark",
-    email: "anyastark@gmail.com",
-    age: 16,
-    phone: "(921)425-6742",
-    access: "admin",
-  },
-  {
-    id: 5,
-    name: "Daenerys Targaryen",
-    email: "daenerystargaryen@gmail.com",
-    age: 31,
-    phone: "(421)445-1189",
-    access: "user",
-  },
-  {
-    id: 6,
-    name: "Ever Melisandre",
-    email: "evermelisandre@gmail.com",
-    age: 150,
-    phone: "(232)545-6483",
-    access: "manager",
-  },
-];
-
 const regEmail =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -194,32 +142,77 @@ const SelectedAcess = [
 ];
 
 function Customers() {
-  const [user, loading] = useAuthState(auth);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user && !loading) {
-      navigate("/Login");
-    }
-  });
-
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [ShowLoading, setShowLoading] = useState(false);
   const [SnackBar, setSnackBar] = useState(false);
-  const [DataTeamAgain, setDataTeamAgain] = useState(mockDataTeam);
+  const [email, setemail] = useState("");
+  const [FulltName, setFulltName] = useState("");
+  const [age, setage] = useState("");
+  const [phone, setphone] = useState("");
+  const [access, setaccess] = useState("");
+  const [DataTeam, setDataTeam] = useState([]);
+  const [DataTeamFromLocaStorge, setDataTeamFromLocaStorge] = useState([]);
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate("/Login");
+    }
+  }, [loading, navigate, user]);
+
+  useEffect(() => {
+    if (localStorage.NewCustomer !== null) {
+      setDataTeamFromLocaStorge(
+        JSON.parse(localStorage.getItem("NewCustomer"))
+      );
+    } else {
+      setDataTeamFromLocaStorge([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (DataTeamFromLocaStorge && DataTeamFromLocaStorge.length > 0) {
+      setDataTeam(DataTeamFromLocaStorge);
+    }
+  }, [DataTeamFromLocaStorge]);
+
+  useEffect(() => {
+    if (DataTeam.length > 0) {
+      localStorage.setItem("NewCustomer", JSON.stringify(DataTeam));
+    }
+  }, [DataTeam]);
+
   const handleClick = () => {
     setSnackBar(true);
   };
 
-  if (localStorage.CustomerData != null) {
-    DataTeam = JSON.parse(localStorage.CustomerData);
-  } else {
-    DataTeam = [];
-  }
+  const EmailValue = (eo) => {
+    let EmailValueInput = eo.target.value;
+    setemail(EmailValueInput);
+  };
+
+  const FulltNameValue = (eo) => {
+    let FulltNameValueInput = eo.target.value;
+    setFulltName(FulltNameValueInput);
+  };
+
+  const ageValue = (eo) => {
+    let ageValueInput = eo.target.value;
+    setage(ageValueInput);
+  };
+
+  const phoneValue = (eo) => {
+    let phoneValueInput = eo.target.value;
+    setphone(phoneValueInput);
+  };
+
+  const accessValue = (eo) => {
+    let accessValueInput = eo.target.value;
+    setaccess(accessValueInput);
+  };
 
   const SnackBarClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -235,33 +228,35 @@ function Customers() {
     formState: { errors },
   } = useForm();
 
-  // useEffect(() => {
-  //   localStorage.setItem('mockDataTeam', JSON.stringify(mockDataTeam));
-  // }, [DataTeam]);
-
   const onSubmit = (data) => {
-    const newCustomer = {
-      id: mockDataTeam.length + 1,
+    let NewCustomer = {
+      id: DataTeam.length + 1,
       name: data.FulltName,
       email: data.email,
-      age: parseInt(data.age),
+      age: data.age,
       phone: data.phone,
       access: data.access,
     };
-
-    DataTeam.push(newCustomer);
-    setDataTeamAgain([...mockDataTeam, ...DataTeam]);
-    localStorage.setItem("CustomerData", JSON.stringify(DataTeamAgain));
+    setDataTeam([...DataTeam, NewCustomer]);
     setShowLoading(true);
     handleClose();
+    setaccess("");
+    setphone("");
+    setage("");
+    setFulltName("");
+    setemail("");
     handleClick();
     setShowLoading(false);
   };
 
-  if (loading ) {
+  if (loading) {
     return (
       <Box>
-        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+        <Lottie
+          options={defaultOptionsForDark}
+          height={"100%"}
+          width={"100%"}
+        />
       </Box>
     );
   }
@@ -320,7 +315,7 @@ function Customers() {
           }}
         >
           <DataGrid
-            rows={mockDataTeam}
+            rows={DataTeam}
             // @ts-ignore
             columns={columns}
             initialState={{
@@ -377,6 +372,8 @@ function Customers() {
                     ? "Are you kidding me? Write Full Name please :)"
                     : null
                 }
+                defaultValue={FulltName}
+                onChange={FulltNameValue}
               />
               <TextField
                 placeholder="Email Address"
@@ -387,6 +384,8 @@ function Customers() {
                 helperText={
                   Boolean(errors.email) ? "Write Your actual email :)" : null
                 }
+                onChange={EmailValue}
+                defaultValue={email}
               />
 
               <TextField
@@ -396,6 +395,8 @@ function Customers() {
                 error={Boolean(errors.age)}
                 {...register("age", { required: true, maxLength: 2 })}
                 helperText={Boolean(errors.age) ? "Are you this old :)" : null}
+                onChange={ageValue}
+                defaultValue={age}
               />
 
               <TextField
@@ -409,14 +410,17 @@ function Customers() {
                     ? "Are you forginer to write phone number like this :)"
                     : null
                 }
+                onChange={phoneValue}
+                defaultValue={phone}
               />
 
               <TextField
                 id="outlined-select-currency"
                 select
                 label="Select"
-                defaultValue="user"
                 {...register("access", { required: true })}
+                onClick={accessValue}
+                defaultValue={access}
               >
                 {SelectedAcess.map((option) => (
                   <MenuItem key={option.value} value={option.value}>

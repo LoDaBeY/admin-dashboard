@@ -84,7 +84,9 @@ const columns = [
           textAlign={"center"}
           direction={"row"}
         >
-          <Button sx={{ color: "ivory", width: "100%" }} variant="text">
+          <Button onClick={() => {
+            
+          }} sx={{ color: "ivory", width: "100%" }} variant="text">
             {access === "Approve" && (
               <Approval color="inherit" sx={{ mr: 1 }} />
             )}
@@ -137,77 +139,80 @@ function Invoices() {
   });
   const theme = useTheme();
 
-  if (loading ) {
+  if (loading) {
     return (
       <Box>
-        <Lottie options={defaultOptionsForDark} height={800} width={800} />
+        <Lottie
+          options={defaultOptionsForDark}
+          height={"100%"}
+          width={"100%"}
+        />
       </Box>
     );
   }
 
-if (user) {
-  return (
-    <Box>
-      <Helmet>
-        <title>Invoices</title>
-      </Helmet>
-      <Stack
-        direction={"row"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
-      >
-        <BreadCrumbs
-          Title={"Invoices"}
-          Subtitle={"HR System for managing list of invoices"}
-        />
-      </Stack>
-      <Box
-        sx={{
-          height: "75vh",
-          width: "100%",
-          "& .MuiDataGrid-columnHeaders": {
-            bgcolor:
-              // @ts-ignore
-              theme.palette.BGColor.main,
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            // @ts-ignore
-            bgcolor: theme.palette.BGColor.main,
-          },
-          "& .NameColumn": {
-            color: theme.palette.info.main,
-          },
-          "& .EmailColumn": {
-            color: theme.palette.warning.main,
-          },
-          "& .PhoneColumn": {
-            color: theme.palette.secondary.main,
-          },
-
-          mt: 3,
-        }}
-      >
-        <DataGrid
-          rows={mockDataInvoices}
-          // @ts-ignore
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 15,
-              },
+  if (user) {
+    return (
+      <Box>
+        <Helmet>
+          <title>Invoices</title>
+        </Helmet>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <BreadCrumbs
+            Title={"Invoices"}
+            Subtitle={"HR System for managing list of invoices"}
+          />
+        </Stack>
+        <Box
+          sx={{
+            height: "75vh",
+            width: "100%",
+            "& .MuiDataGrid-columnHeaders": {
+              bgcolor:
+                // @ts-ignore
+                theme.palette.BGColor.main,
+              borderBottom: "none",
             },
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              // @ts-ignore
+              bgcolor: theme.palette.BGColor.main,
+            },
+            "& .NameColumn": {
+              color: theme.palette.info.main,
+            },
+            "& .EmailColumn": {
+              color: theme.palette.warning.main,
+            },
+            "& .PhoneColumn": {
+              color: theme.palette.secondary.main,
+            },
+
+            mt: 3,
           }}
-          disableRowSelectionOnClick
-          components={{ Toolbar: GridToolbar }}
-        />
+        >
+          <DataGrid
+            rows={mockDataInvoices}
+            // @ts-ignore
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 15,
+                },
+              },
+            }}
+            disableRowSelectionOnClick
+            components={{ Toolbar: GridToolbar }}
+          />
+        </Box>
       </Box>
-      
-    </Box>
-  );
-}
+    );
+  }
 }
 
 export default Invoices;
